@@ -1,0 +1,486 @@
+/* log.css - 日誌查看器樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: #1a1a1a;
+    color: #e0e0e0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.log-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: #1e1e1e;
+}
+
+/* 工具欄 */
+.log-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: #2d2d2d;
+    border-bottom: 1px solid #404040;
+    flex-shrink: 0;
+}
+
+.toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.toolbar-left h2 {
+    color: #4fc3f7;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.log-info {
+    display: flex;
+    gap: 15px;
+    font-size: 0.85rem;
+    color: #b0b0b0;
+}
+
+.log-info span {
+    padding: 4px 8px;
+    background: #3a3a3a;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 10px;
+    font-size: 0.9rem;
+}
+
+.control-group input {
+    width: 80px;
+    padding: 6px 8px;
+    background: #3a3a3a;
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: #e0e0e0;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.control-group input:focus {
+    outline: none;
+    border-color: #4fc3f7;
+}
+
+/* 按鈕樣式 */
+.btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.btn-primary {
+    background: #4fc3f7;
+    color: #1a1a1a;
+}
+
+.btn-primary:hover {
+    background: #29b6f6;
+}
+
+.btn-primary.active {
+    background: #388e3c;
+    color: white;
+}
+
+.btn-secondary {
+    background: #616161;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #757575;
+}
+
+.btn-small {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+}
+
+.btn.active {
+    background: #388e3c;
+    color: white;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 日誌內容區域 */
+.log-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.log-header {
+    display: grid;
+    grid-template-columns: 180px 80px 150px 1fr;
+    gap: 10px;
+    padding: 10px 15px;
+    background: #2d2d2d;
+    border-bottom: 1px solid #404040;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #b0b0b0;
+    flex-shrink: 0;
+}
+
+.log-body {
+    flex: 1;
+    overflow-y: auto;
+    background: #1a1a1a;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+}
+
+/* 日誌行樣式 */
+.log-entry {
+    display: grid;
+    grid-template-columns: 180px 80px 150px 1fr;
+    gap: 10px;
+    padding: 8px 15px;
+    border-bottom: 1px solid #2a2a2a;
+    word-wrap: break-word;
+    transition: background-color 0.1s ease;
+}
+
+.log-entry:hover {
+    background: #252525;
+}
+
+.log-entry.new {
+    background: #1b3a1b;
+    animation: newLogHighlight 1s ease-out;
+}
+
+@keyframes newLogHighlight {
+    0% { background: #2e7d32; }
+    100% { background: #1b3a1b; }
+}
+
+.log-timestamp {
+    color: #81c784;
+    font-weight: 500;
+}
+
+.log-level {
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+.log-level.INFO {
+    background: #1976d2;
+    color: white;
+}
+
+.log-level.ERROR {
+    background: #d32f2f;
+    color: white;
+}
+
+.log-level.WARNING {
+    background: #f57c00;
+    color: white;
+}
+
+.log-level.DEBUG {
+    background: #7b1fa2;
+    color: white;
+}
+
+.log-source {
+    color: #ffb74d;
+    font-weight: 500;
+}
+
+.log-message {
+    color: #e0e0e0;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+/* 載入狀態 */
+.log-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: #b0b0b0;
+    gap: 15px;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #3a3a3a;
+    border-top: 3px solid #4fc3f7;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.log-empty {
+    text-align: center;
+    color: #777;
+    padding: 40px;
+    font-style: italic;
+}
+
+.log-error {
+    text-align: center;
+    color: #f44336;
+    padding: 40px;
+}
+
+/* 底部狀態欄 */
+.log-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px;
+    background: #2d2d2d;
+    border-top: 1px solid #404040;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.footer-left {
+    display: flex;
+    gap: 20px;
+    color: #b0b0b0;
+}
+
+.footer-right {
+    display: flex;
+    gap: 8px;
+}
+
+#connection-status.connected {
+    color: #4caf50;
+}
+
+#connection-status.disconnected {
+    color: #f44336;
+}
+
+/* 滾動條樣式 */
+.log-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.log-body::-webkit-scrollbar-track {
+    background: #2a2a2a;
+}
+
+.log-body::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+}
+
+.log-body::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+/* 響應式設計 */
+@media (max-width: 1024px) {
+    .log-header,
+    .log-entry {
+        grid-template-columns: 140px 70px 120px 1fr;
+        font-size: 0.75rem;
+    }
+    
+    .toolbar-right {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    
+    .control-group {
+        order: 3;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .log-toolbar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .toolbar-left,
+    .toolbar-right {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .toolbar-right {
+        flex-wrap: wrap;
+    }
+    
+    .log-header,
+    .log-entry {
+        grid-template-columns: 120px 60px 1fr;
+    }
+    
+    .log-source {
+        display: none;
+    }
+    
+    .log-footer {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+}
+
+/* Console 樣式主題變數 */
+:root {
+    --console-bg: #1a1a1a;
+    --console-border: #404040;
+    --console-text: #e0e0e0;
+    --console-primary: #4fc3f7;
+    --console-success: #4caf50;
+    --console-warning: #ff9800;
+    --console-error: #f44336;
+    --console-secondary: #616161;
+}
+
+/* 美化滾動動畫 */
+.log-body {
+    scroll-behavior: smooth;
+}
+
+/* 選中文字樣式 */
+.log-entry::selection,
+.log-entry *::selection {
+    background: #4fc3f7;
+    color: #1a1a1a;
+}
+
+/* Iframe 模式下的樣式調整 */
+body.iframe-mode {
+    background: transparent;
+}
+
+body.iframe-mode .log-container {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}/* 搜尋功能樣式 */
+.search-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-right: 10px;
+}
+
+.search-group input {
+    width: 200px;
+    padding: 6px 12px;
+    background: #3a3a3a;
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: #e0e0e0;
+    font-size: 0.85rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.search-group input:focus {
+    outline: none;
+    border-color: #4fc3f7;
+    box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.2);
+}
+
+.search-group input.has-results {
+    border-color: #4caf50;
+}
+
+.search-group input.no-results {
+    border-color: #f44336;
+}
+
+/* 搜尋結果高亮 */
+.log-entry .highlight {
+    background: #ffeb3b;
+    color: #1a1a1a;
+    padding: 1px 2px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+
+.log-entry.search-match {
+    background: #1b3a1b;
+    border-left: 3px solid #4caf50;
+}
+
+.log-entry.search-hidden {
+    display: none;
+}
+
+/* 搜尋統計 */
+.search-stats {
+    font-size: 0.8rem;
+    color: #b0b0b0;
+    margin-left: 10px;
+}
+
+/* 響應式調整 */
+@media (max-width: 1024px) {
+    .search-group input {
+        width: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-group {
+        order: 2;
+        width: 100%;
+        margin-right: 0;
+        margin-top: 10px;
+    }
+    
+    .search-group input {
+        flex: 1;
+    }
+}

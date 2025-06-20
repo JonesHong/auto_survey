@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自動化任務啟動器</title>
+    <!-- 動態調整 CSS 路徑，根據是否通過反向代理訪問 -->
+    <link rel="stylesheet" href="{{ root_path }}/static/css/style.css">
+    <link rel="stylesheet" href="{{ root_path }}/static/css/log-widget.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 自動化任務啟動器</h1>
+            <p id="clock"></p>
+            <p class="subtitle">請選擇您要使用的模式</p>
+        </header>
+
+        <div class="mode-selection">
+            <div class="mode-card" onclick="navigateToMode('{{ root_path }}/csv')">
+                <div class="mode-icon">📋</div>
+                <h2>批次處理模式</h2>
+                <p class="mode-description">
+                    從 CSV 檔案批次處理多人表單<br>
+                    適合大量使用者同時填寫
+                </p>
+                <div class="mode-features">
+                    <span class="feature">✓ CSV 批次讀取</span>
+                    <span class="feature">✓ 多人並行處理</span>
+                    <span class="feature">✓ 快取防重複</span>
+                </div>
+                <button class="mode-button">開始批次處理</button>
+            </div>
+
+            <div class="mode-card" onclick="navigateToMode('{{ root_path }}/personal')">
+                <div class="mode-icon">👤</div>
+                <h2>個人填表模式</h2>
+                <p class="mode-description">
+                    手動輸入個人資訊進行表單填寫<br>
+                    適合單一使用者操作
+                </p>
+                <div class="mode-features">
+                    <span class="feature">✓ 個人資訊輸入</span>
+                    <span class="feature">✓ 即時處理</span>
+                    <span class="feature">✓ 智能檢查</span>
+                </div>
+                <button class="mode-button">開始個人填表</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>💡 兩種模式都支援快取系統，避免重複提交相同表單</p>
+        </footer>
+    </div>
+    <!-- 日誌查看器浮動按鈕 -->
+    <div id="log-widget">
+        <button id="log-toggle-btn" class="log-float-btn" title="查看系統日誌">
+            📋
+        </button>
+
+        <!-- 日誌查看器面板 -->
+        <div id="log-panel" class="log-panel">
+            <div class="log-panel-header">
+                <span>📋 系統日誌</span>
+                <div class="log-panel-controls">
+                    <button id="log-minimize-btn" title="最小化">─</button>
+                    <button id="log-close-btn" title="關閉">✕</button>
+                </div>
+            </div>
+            <div class="log-panel-content">
+                <iframe id="log-iframe" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 更新時鐘
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleString('zh-TW', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+            document.getElementById('clock').textContent = `現在時間：${timeString}`;
+        }
+
+        // 每秒更新時鐘
+        setInterval(updateClock, 1000);
+        updateClock(); // 立即更新一次
+
+        // 導航到指定模式
+        function navigateToMode(url) {
+            window.location.href = url;
+        }
+
+        // 為卡片添加懸停效果
+        document.querySelectorAll('.mode-card').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+    <script src="{{ root_path }}/static/js/log-widget.js"></script>
+</body>
+
+</html>

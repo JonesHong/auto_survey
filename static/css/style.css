@@ -1,0 +1,241 @@
+/* index_style.css - 首頁專用樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
+}
+
+header {
+    margin-bottom: 40px;
+}
+
+header h1 {
+    color: #333;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+#clock {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #555;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.mode-selection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.mode-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.mode-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.mode-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+.mode-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.mode-card h2 {
+    color: #333;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.mode-description {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.mode-features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 25px;
+}
+
+.feature {
+    color: #28a745;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.mode-button {
+    width: 100%;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mode-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+footer {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+footer p {
+    color: #666;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .container {
+        padding: 25px;
+        margin: 10px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .mode-selection {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .mode-card {
+        padding: 25px 20px;
+    }
+    
+    .mode-icon {
+        font-size: 2.5rem;
+    }
+    
+    .mode-card h2 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+    
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .mode-card {
+        padding: 20px 15px;
+    }
+}
+
+/* 動畫效果 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.mode-card:nth-child(1) {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.mode-card:nth-child(2) {
+    animation: fadeInUp 1s ease-out;
+}
+
+/* 特殊效果 */
+.mode-card:nth-child(1)::before {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.mode-card:nth-child(2)::before {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.mode-card:nth-child(1) .mode-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.mode-card:nth-child(2) .mode-button {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}

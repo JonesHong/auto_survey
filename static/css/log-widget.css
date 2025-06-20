@@ -1,0 +1,113 @@
+/* 日誌查看器小工具樣式 */
+#log-widget {
+    position: fixed;
+    z-index: 9999;
+}
+
+.log-float-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 10000;
+}
+
+.log-float-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+}
+
+.log-panel {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 800px;
+    height: 500px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.log-panel.show {
+    display: flex;
+}
+
+.log-panel.minimized {
+    height: 50px;
+}
+
+.log-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    cursor: move;
+}
+
+.log-panel-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.log-panel-controls button {
+    width: 25px;
+    height: 25px;
+    border: none;
+    background: #6c757d;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.log-panel-controls button:hover {
+    background: #495057;
+}
+
+.log-panel-content {
+    flex: 1;
+    display: none;
+}
+
+.log-panel:not(.minimized) .log-panel-content {
+    display: block;
+}
+
+#log-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* 響應式調整 */
+@media (max-width: 768px) {
+    .log-panel {
+        width: calc(100vw - 20px);
+        height: 70vh;
+        right: 10px;
+        bottom: 80px;
+    }
+    
+    .log-float-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+}

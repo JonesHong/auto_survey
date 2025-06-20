@@ -1,0 +1,20 @@
+# Core Automation
+playwright
+
+# Web Server (FastAPI & Uvicorn)
+fastapi
+uvicorn[standard]
+jinja2
+python-multipart
+
+# Data Handling & Validation
+pydantic
+
+# Configuration Management
+ini2py
+
+# Asynchronous Utilities (for Windows compatibility)
+nest-asyncio
+
+oepnai
+pretty_loguru

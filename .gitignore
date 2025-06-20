@@ -1,0 +1,43 @@
+
+# Build output
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Playwright test artifacts
+/playwright-report/
+/test-results/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Config files
+config.ini
+
+# Backup files
+backup/
+
+# Survey cache
+survey_cache/*.json
+
+# CSV files
+*.csv
+
+*.log

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>批次自動化任務啟動器</title>
+    <!-- 動態調整 CSS 路徑，根據是否通過反向代理訪問 -->
+    <link rel="stylesheet" href="{{ root_path }}/static/css/csv.css">
+    <link rel="stylesheet" href="{{ root_path }}/static/css/log-widget.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 批次自動化任務啟動器</h1>
+            <p id="clock"></p>
+            <div class="page-switch">
+                <a href="{{ root_path }}/">🏠 首頁</a> |
+                <span class="current-page">📋 批次處理</span> |
+                <a href="{{ root_path }}/personal">👤 個人填表</a>
+            </div>
+        </header>
+
+        <!-- 用戶資料管理區塊 -->
+        <div class="user-management-section">
+            <div class="section-header">
+                <h2>👥 用戶資料管理</h2>
+                <div class="user-stats">
+                    <span id="user-count">載入中...</span>
+                </div>
+            </div>
+
+            <div class="add-user-form">
+                <h3>➕ 新增用戶</h3>
+                <div class="form-row">
+                    <input type="text" id="new-name" placeholder="姓名" required>
+                    <input type="email" id="new-email" placeholder="Email" required>
+                    <button onclick="addUser()" class="btn-add">新增</button>
+                </div>
+            </div>
+
+            <!-- 用戶列表 -->
+            <div class="user-list-container">
+                <h3>📝 用戶列表</h3>
+                <div class="table-controls">
+                    <button onclick="refreshUserList()" class="btn-refresh">🔄 重新載入</button>
+                    <button onclick="exportToCSV()" class="btn-export">📥 匯出 CSV</button>
+                    <!-- 匯入按鈕只有在 admin_mode 下顯示 -->
+                    {% if admin_mode %}
+                    <label for="csv-upload" class="btn-import">📤 匯入 CSV</label>
+                    <input type="file" id="csv-upload" accept=".csv" style="display: none;"
+                        onchange="importFromCSV(event)">
+                    {% endif %}
+                </div>
+
+                <div class="table-wrapper">
+                    <table id="user-table">
+                        <thead>
+                            <tr>
+                                <th>編號</th>
+                                <th>姓名</th>
+                                <th>Email</th>
+                                <!-- 操作欄位只有在 admin_mode 下顯示 -->
+                                {% if admin_mode %}
+                                <th>操作</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody id="user-table-body">
+                            <tr>
+                                <td colspan="4" class="loading">載入用戶資料中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 問卷連結區塊 -->
+        <div class="form-section">
+            <h3>🔗 問卷連結設定</h3>
+            <form id="automation-form" action="{{ root_path }}/run-automation" method="post">
+                <div class="form-group">
+                    <label for="attend_url">簽到問卷 URL</label>
+                    <input type="url" id="attend_url" name="attend_url" placeholder="https://www.surveycake.com/s/..."
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="quiz_url">測驗問卷 URL</label>
+                    <input type="url" id="quiz_url" name="quiz_url" placeholder="https://www.surveycake.com/s/..."
+                        required>
+                </div>
+                <button type="submit" id="submit-btn">🚀 啟動批次自動化任務</button>
+            </form>
+        </div>
+
+        <div id="status-message"></div>
+    </div>
+
+    <!-- 編輯用戶的彈窗 -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>✏️ 編輯用戶</h3>
+                <button class="close-btn" onclick="closeEditModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="edit-user-id">
+                <div class="form-group">
+                    <label for="edit-name">姓名</label>
+                    <input type="text" id="edit-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-email">Email</label>
+                    <input type="email" id="edit-email" required>
+                </div>
+            </div>
+            <!-- 操作欄位只有在 admin_mode 下顯示 -->
+            {% if admin_mode %}
+            <div class="modal-footer">
+                <button onclick="closeEditModal()" class="btn-cancel">取消</button>
+                <button onclick="saveUser()" class="btn-save">保存</button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <!-- 日誌查看器浮動按鈕 -->
+    <div id="log-widget">
+        <button id="log-toggle-btn" class="log-float-btn" title="查看系統日誌">
+            📋
+        </button>
+
+        <!-- 日誌查看器面板 -->
+        <div id="log-panel" class="log-panel">
+            <div class="log-panel-header">
+                <span>📋 系統日誌</span>
+                <div class="log-panel-controls">
+                    <button id="log-minimize-btn" title="最小化">─</button>
+                    <button id="log-close-btn" title="關閉">✕</button>
+                </div>
+            </div>
+            <div class="log-panel-content">
+                <iframe id="log-iframe" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- 將 root_path 傳遞給 JavaScript -->
+    <script>
+        window.ROOT_PATH = "{{ root_path }}";
+        window.ADMIN_MODE = "{{admin_mode}}".toLowerCase() === "true" ? true : false;
+        console.log(window.ADMIN_MODE, "{{admin_mode}}")
+    </script>
+    <!-- 動態調整 JS 路徑 -->
+    <script src="{{ root_path }}/static/js/csv.js"></script>
+    <script src="{{ root_path }}/static/js/log-widget.js"></script>
+</body>
+
+</html>

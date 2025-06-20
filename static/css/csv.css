@@ -1,0 +1,479 @@
+/* csv_style.css - CSV 頁面專用樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 標題區塊 */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: #333;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+#clock {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.page-switch {
+    margin-top: 15px;
+    font-size: 0.9rem;
+}
+
+.page-switch a {
+    color: #667eea;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.page-switch a:hover {
+    background-color: rgba(102, 126, 234, 0.1);
+}
+
+.current-page {
+    color: #764ba2;
+    font-weight: 600;
+    padding: 5px 10px;
+    background-color: rgba(118, 75, 162, 0.1);
+    border-radius: 5px;
+}
+
+/* 用戶管理區塊 */
+.user-management-section {
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-left: 4px solid #667eea;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    color: #333;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.user-stats {
+    background: rgba(102, 126, 234, 0.1);
+    padding: 8px 15px;
+    border-radius: 20px;
+    color: #667eea;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* 新增用戶表單 */
+.add-user-form {
+    margin-bottom: 25px;
+}
+
+.add-user-form h3 {
+    color: #333;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    align-items: end;
+}
+
+.form-row input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s;
+}
+
+.form-row input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* 按鈕樣式 */
+.btn-add, .btn-refresh, .btn-export, .btn-import, .btn-save, .btn-cancel {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-add {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+}
+
+.btn-refresh {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-export, .btn-import {
+    background: linear-gradient(135deg, #6f42c1 0%, #e83e8c 100%);
+    color: white;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+}
+
+.btn-cancel {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-edit {
+    background: #ffc107;
+    color: #212529;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+}
+
+button:hover, .btn-import:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* 用戶列表 */
+.user-list-container h3 {
+    color: #333;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.table-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.table-wrapper {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#user-table th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+#user-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+#user-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.loading, .no-data {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 30px !important;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+/* 彈窗樣式 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: white;
+    margin: 15% auto;
+    padding: 0;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modal-header h3 {
+    color: #333;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #adb5bd;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn:hover {
+    color: #6c757d;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.modal-footer {
+    padding: 20px 25px;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* 表單區塊 */
+.form-section {
+    background: rgba(118, 75, 162, 0.05);
+    border-radius: 15px;
+    padding: 25px;
+    border-left: 4px solid #764ba2;
+}
+
+.form-section h3 {
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.form-group input[type="url"] {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #764ba2;
+    box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
+}
+
+#submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+#submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+#submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* 狀態訊息 */
+#status-message {
+    margin-top: 25px;
+}
+
+.status {
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.status.loading {
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid #ffc107;
+    color: #856404;
+}
+
+.status.success {
+    background: rgba(40, 167, 69, 0.1);
+    border: 1px solid #28a745;
+    color: #155724;
+}
+
+.status.error {
+    background: rgba(220, 53, 69, 0.1);
+    border: 1px solid #dc3545;
+    color: #721c24;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .table-controls {
+        justify-content: center;
+    }
+    
+    .table-wrapper {
+        overflow-x: auto;
+    }
+    
+    #user-table {
+        min-width: 600px;
+    }
+    
+    .modal-content {
+        margin: 10% auto;
+        width: 95%;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    
+    header h1 {
+        font-size: 1.6rem;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .btn-edit, .btn-delete {
+        padding: 8px 12px;
+        font-size: 0.75rem;
+    }
+}
