@@ -310,8 +310,6 @@ async def fill_form_with_cache_check(url, name, email, company_name, cache_manag
                          app_logger.warning(f"準備進行下一次重試...")
                     else:
                          app_logger.error(f"❌ {name} 的表單在所有重試後仍提交失敗。將不會記錄為成功提交。")
-                         # 也可以選擇在這裡記錄失敗狀態
-                         # cache_manager.log_user_submission(url, name, email, success=False)
                 
             except Exception as e:
                 app_logger.error(f"❌ {name} 的表單填寫過程中發生錯誤 (第 {attempt + 1} 次嘗試): {e}")
@@ -396,3 +394,25 @@ async def batch_process_forms_from_manager(url, user_manager, company_name, cach
     await asyncio.gather(*tasks)
     
     app_logger.info("✅ 所有表單處理完成！")
+
+# ========== 單一表單處理函數 ==========
+async def process_single_form(url, name, email, company_name, cache_manager, custom_fill_func=None):
+    """
+    處理單一表單
+    
+    Args:
+        url: 表單網址
+        name: 姓名
+        email: Email
+        company_name: 公司名稱
+        cache_manager: 快取管理器實例
+        custom_fill_func: 自定義填表函數（可選）
+    """
+    await fill_form_with_cache_check(
+        url=url,
+        name=name,
+        email=email,
+        company_name=company_name,
+        cache_manager=cache_manager,
+        custom_fill_func=custom_fill_func
+    )

@@ -88,32 +88,7 @@ playwright install
 
 您可以透過以下三種方式來執行自動化任務：
 
-#### 方法一：使用主腳本 `main.py` (推薦)
-
-此方法最為靈活，您可以透過指令列參數指定要執行的任務和 URL。
-
-- **僅執行簽到**:
-  ```bash
-  python main.py --task attend --attend_url "您的簽到問卷網址"
-  ```
-
-- **僅執行測驗**:
-  ```bash
-  python main.py --task quiz --quiz_url "您的測驗問卷網址"
-  ```
-
-- **同時執行簽到與測驗**:
-  ```bash
-  python main.py --task all --attend_url "您的簽到網址" --quiz_url "您的測驗網址"
-  ```
-
-- **互動模式**:
-  如果您不提供任何參數，腳本會進入互動模式，引導您輸入必要的資訊。
-  ```bash
-  python main.py
-  ```
-
-#### 方法二：啟動 Web 伺服器 `server.py`
+#### 啟動 Web 伺服器 `server.py`
 
 此方法會啟動一個本地的 Web 服務，讓您可以透過瀏覽器介面來操作。
 
@@ -124,15 +99,12 @@ playwright install
 
 2.  **啟動伺服器**:
     ```bash
-    uvicorn server:app --reload
+    python server.py
     ```
 
 3.  **開啟瀏覽器**:
-    在瀏覽器中開啟 `http://127.0.0.1:8000`，您將會看到一個操作介面，可以在上面填入 URL 並啟動自動化任務。
+    在瀏覽器中開啟 `http://127.0.0.51000`，您將會看到一個操作介面，可以在上面填入 URL 並啟動自動化任務。
 
-#### 方法三：(舊版) 直接執行腳本
-
-原本直接執行 `auto_attendance.py` 和 `auto_quiz.py` 的方式已不再是主要的使用方法，建議改用 `main.py`。
 
 ## 📝 注意事項
 

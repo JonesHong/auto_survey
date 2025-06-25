@@ -9,6 +9,7 @@ python-multipart
 
 # Data Handling & Validation
 pydantic
+pydantic[email]
 
 # Configuration Management
 ini2py
@@ -16,5 +17,6 @@ ini2py
 # Asynchronous Utilities (for Windows compatibility)
 nest-asyncio
 
-oepnai
+openai
 pretty_loguru
+matplotlib

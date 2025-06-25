@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  auto-survey:
+    build: .
+    container_name: auto_survey_app
+    ports:
+      - "51000:51000"
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./survey_cache:/app/survey_cache
+    restart: always

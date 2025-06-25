@@ -41,3 +41,4 @@ survey_cache/*.json
 *.csv
 
 *.log
+*.zip

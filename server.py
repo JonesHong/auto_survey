@@ -27,13 +27,9 @@ from src.utils.graceful_shutdown import GracefulShutdown
 graceful_shutdown = GracefulShutdown()
 # 初始化
 config = ConfigManager()
-configure_uvicorn(logger_instance=app_logger)
 
 app = FastAPI(
     title="自動化任務啟動器 API", description="透過 Web 介面啟動簽到與測驗自動化腳本"
-)
-setup_fastapi_logging(
-    app, logger_instance=app_logger, log_request_body=False, log_response_body=False
 )
 # 靜態檔案和模板
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -287,37 +283,32 @@ def verify_editor_access(
 
 
 def run_task_in_subprocess(task_type: str, url: str, personal_info: dict = None):
-    """執行子進程任務"""
+    """執行子進程任務 - 實時輸出版本"""
     command = [sys.executable, "playwright_worker.py", task_type, "--url", url]
     if personal_info:
         command.extend(["--personal_info", json.dumps(personal_info)])
 
     app_logger.info(f"主進程：準備執行子進程命令: {' '.join(command)}")
+    
     try:
+        # 方案1：讓子進程直接輸出到控制台（實時顯示）
         result = subprocess.run(
-            command, capture_output=True, text=True, encoding="utf-8", check=False
+            command, 
+            check=False,
+            text=True, 
+            encoding="utf-8"
+            # 不使用 capture_output=True，讓輸出直接顯示
         )
-
-        if result.stdout:
-            app_logger.info(
-                f"--- 子進程 STDOUT ({task_type}) ---\n{result.stdout.strip()}"
-            )
-        if result.stderr:
-            app_logger.info(
-                f"--- 子進程 STDERR ({task_type}) ---\n{result.stderr.strip()}"
-            )
-
+        
         if result.returncode != 0:
-            app_logger.info(
-                f"❌ 子進程任務 '{task_type}' 執行失敗，返回碼: {result.returncode}"
-            )
+            app_logger.error(f"❌ 子進程任務 '{task_type}' 執行失敗，返回碼: {result.returncode}")
         else:
             app_logger.info(f"✅ 子進程任務 '{task_type}' 執行成功。")
 
     except FileNotFoundError:
-        app_logger.info("❌ 錯誤：找不到 'playwright_worker.py'")
+        app_logger.error("❌ 錯誤：找不到 'playwright_worker.py'")
     except Exception as e:
-        app_logger.info(f"❌ 執行子進程時發生錯誤: {e}")
+        app_logger.error(f"❌ 執行子進程時發生錯誤: {e}")
 
 
 def run_tasks_in_background(attend_url: str, quiz_url: str):
@@ -660,14 +651,24 @@ if __name__ == "__main__":
     for msg in info_messages:
         app_logger.info(msg)
     
-    try:
-        uvicorn.run(
-            "server:app", 
+    uv_config = uvicorn.Config(
+            app, 
             host=HOST, 
             port=PORT,
             log_level="warning",
             access_log=False
-        )
+    )
+    server = uvicorn.Server(uv_config)
+    
+    configure_uvicorn(logger_instance=app_logger)
+    setup_fastapi_logging(
+        app, logger_instance=app_logger,
+        middleware=False,  # <---- 這裡關掉
+        log_request_body=False,
+        log_response_body=False
+    )
+    try:
+        server.run()
     except (KeyboardInterrupt, asyncio.exceptions.CancelledError, SystemExit):
         app_logger.info("⚡ 收到 Ctrl+C 中斷信號")
     except Exception as e:

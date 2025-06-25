@@ -5,7 +5,7 @@
 使用共用模組，專注於簽到特有功能，並加入快取系統
 """
 import asyncio
-from utils.survey_utils import CacheManager, batch_process_forms, batch_process_forms_from_manager
+from src.utils.survey_utils import CacheManager, batch_process_forms, batch_process_forms_from_manager
 
 from src.utils.logger_manager import app_logger
 from src.config.manager import ConfigManager
