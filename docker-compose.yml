@@ -3,11 +3,15 @@ version: '3.8'
 services:
   auto-survey:
     build: .
-    container_name: auto_survey_app
+    container_name: app
     ports:
       - "51000:51000"
+    environment:
+      - DOCKER_CONTAINER=true
     volumes:
+      - .:/app
       - ./data:/app/data
       - ./logs:/app/logs
       - ./survey_cache:/app/survey_cache
+    command: python server.py
     restart: always

@@ -76,8 +76,10 @@ class GracefulShutdown:
         註冊信號處理程序和退出時的清理操作。
         """
         if not hasattr(self, "_signals_setup_done"):
-            signal.signal(signal.SIGINT, self.signal_handler)
-            signal.signal(signal.SIGTERM, self.signal_handler)
+            # 在 Docker 容器中禁用信號處理，避免與 uvicorn 衝突
+            if not os.getenv("DOCKER_CONTAINER", False):
+                signal.signal(signal.SIGINT, self.signal_handler)
+                signal.signal(signal.SIGTERM, self.signal_handler)
             atexit.register(self.cleanup)
             self._signals_setup_done = True
 
